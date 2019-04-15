@@ -1,11 +1,16 @@
+#Development Notes:
+#Trying a library at https://github.com/amaork/libi2c
+#   Adds I2C support in Python, hopefully for the Jetson TX1
+#   Avoiding using C++ due to harder GUI.
+
 #GUI for control of the 3D printed arm
-#Pi must be connected via I2C to the arduino uno, address 8, to
+#Jetson TX1 must be connected via I2C to the arduino uno, address 8, to
 #control the hardware PWMs. 
 
 from tkinter import *
 
 #Servo Specs and Operation
-#Servos for Joints 0, 1, 2, and 3 are mapped to GPIO pins 29, 31, 33, 35 respectively
+#Servos for Joints 0, 1, 2, and 3 are mapped to GPIO pins 29, 31, 33, 35
 
 def setDutyPWM0(newDuty):
     print("SetDutyPWM0 called")
@@ -86,3 +91,4 @@ Button(master, text='To Home Position', command=toHome).pack()
 
 mainloop()
 #insert cleanup code here
+
