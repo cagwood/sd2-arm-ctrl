@@ -24,12 +24,10 @@ class Arm:
 
 #Functions 
 def setAngle(jointNum, newAngle):
-    print("setAngle called")
     data = bytes([jointNum, int(newAngle)])
     i2c.write(data)
 
 def toHome():
-    print("ToHome called")
     data = bytes([0, Arm.home[0],
                   1, Arm.home[1],
                   2, Arm.home[2],
@@ -85,42 +83,6 @@ sliders[4] = createSlider(master, "J4 Angle", 0, 180, Arm.home[4], j4slide)
 sliders[4].pack()
 sliders[5] = createSlider(master, "J5 Angle", 0, 180, Arm.home[5], j5slide)
 sliders[5].pack()
-
-##j1Scale = Scale(master,
-##    label      = 'J1 servo pulse width (ms)',
-##    from_      = ServoSpecs.pwmDutyMin,
-##    to         = ServoSpecs.pwmDutyMax,
-##    command    = setDutyPWM1,
-##    digits     = 3,
-##    resolution = 0.01,
-##    length     = 500,
-##    orient     = HORIZONTAL)
-##j1Scale.set(ArmSpecs.homeDuties[1])
-##j1Scale.pack()
-##
-##j2Scale = Scale(master,
-##    label      = 'J2 servo pulse width (ms)',
-##    from_      = ServoSpecs.pwmDutyMin,
-##    to         = ServoSpecs.pwmDutyMax,
-##    command    = setDutyPWM2,
-##    digits     = 3,
-##    resolution = 0.01,
-##    length     = 500,
-##    orient     = HORIZONTAL)
-##j2Scale.set(ArmSpecs.homeDuties[2])
-##j2Scale.pack()
-##
-##j3Scale = Scale(master,
-##    label      = 'J3 (wrist) servo pulse width (ms)',
-##    from_      = ServoSpecs.pwmDutyMin,
-##    to         = ServoSpecs.pwmDutyMax,
-##    command    = setDutyPWM3,
-##    digits     = 3,
-##    resolution = 0.01,
-##    length     = 500,
-##    orient     = HORIZONTAL)
-##j3Scale.set(ArmSpecs.homeDuties[3])
-##j3Scale.pack()
 
 Button(master, text='To Home Position', command=toHome).pack()
 
