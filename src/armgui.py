@@ -14,6 +14,7 @@ from i2cdev  import I2C
 #I2C Setup
 ardAddr = 0x08
 ardBus  = 1
+#I2C parts commented out due to permissions denied
 i2c = I2C(ardAddr, ardBus)
 
 #Servo Specs and Operation
@@ -24,7 +25,7 @@ class Arm:
 #Functions 
 def setAngle(jointNum, newAngle):
     print("setAngle called")
-    data = bytes([jointNum, newAngle])
+    data = bytes([jointNum, int(newAngle)])
     i2c.write(data)
 
 def toHome():
@@ -72,17 +73,17 @@ sliders = []
 for num in range(6):
     sliders.append(Scale)
 
-sliders[0] = createSlider(master, "J0 Angle", 0, 180, 90, j0slide)
+sliders[0] = createSlider(master, "J0 Angle", 0, 180, Arm.home[0], j0slide)
 sliders[0].pack()
-sliders[1] = createSlider(master, "J1 Angle", 0, 180, 90, j1slide)
+sliders[1] = createSlider(master, "J1 Angle", 0, 180, Arm.home[1], j1slide)
 sliders[1].pack()
-sliders[2] = createSlider(master, "J2 Angle", 0, 180, 90, j2slide)
+sliders[2] = createSlider(master, "J2 Angle", 0, 180, Arm.home[2], j2slide)
 sliders[2].pack()
-sliders[3] = createSlider(master, "J3 Angle", 0, 180, 90, j3slide)
+sliders[3] = createSlider(master, "J3 Angle", 0, 180, Arm.home[3], j3slide)
 sliders[3].pack()
-sliders[4] = createSlider(master, "J4 Angle", 0, 180, 90, j4slide)
+sliders[4] = createSlider(master, "J4 Angle", 0, 180, Arm.home[4], j4slide)
 sliders[4].pack()
-sliders[5] = createSlider(master, "J5 Angle", 0, 180, 90, j5slide)
+sliders[5] = createSlider(master, "J5 Angle", 0, 180, Arm.home[5], j5slide)
 sliders[5].pack()
 
 ##j1Scale = Scale(master,
