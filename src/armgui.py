@@ -23,7 +23,8 @@ class Arm:
 
 #Functions 
 def setAngle(jointNum, newAngle):
-    i2c.write_byte_data(ardAddr, jointNum, newAngle)
+    angle = int(newAngle)
+    i2c.write_byte_data(ardAddr, jointNum, angle)
 
 def toHome():
     data = bytes([0, Arm.home[0],
