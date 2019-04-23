@@ -9,14 +9,13 @@
 #control the hardware PWMs. 
 
 from tkinter import *
-from i2cdev  import I2C
+from smbus import SMBus
 
 #I2C Setup
 ardAddr = 0x08
 ardBus  = 1
-#I2C parts commented out due to permissions denied
-i2c = I2C(ardAddr, ardBus)
 
+i2c = SMBus(ardBus)
 #Servo Specs and Operation
 #Servos for Joints 0, 1, 2, and 3 are mapped to GPIO pins 29, 31, 33, 35
 class Arm:
@@ -24,8 +23,7 @@ class Arm:
 
 #Functions 
 def setAngle(jointNum, newAngle):
-    data = bytes([jointNum, int(newAngle)])
-    i2c.write(data)
+    i2c.write_byte_data(ardAddr, jointNum, newAngle)
 
 def toHome():
     data = bytes([0, Arm.home[0],
@@ -34,7 +32,10 @@ def toHome():
                   3, Arm.home[3],
                   4, Arm.home[4],
                   5, Arm.home[5]])
-    i2c.write(data)
+    for slider in range(6):
+        sliders[slider].set(Arm.home[slider])
+    for joint in range(6):
+        i2c.write_byte_data(ardAddr, joint, Arm.home[joint])
  
 
 #Slider callbacks
