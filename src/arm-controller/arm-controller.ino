@@ -17,17 +17,11 @@
 Servo servos[6];
 int servoHomeAngles[] = {90, 150, 20, 0, 0, 0};
 int servoHomeAnglesSize = sizeof(servoHomeAngles)/sizeof(int);
-int servoSel = 0;
-int newServoVal = 0;
-int selectingServo = 1;
  
 void setup() {
   // I2C setup
   Wire.begin(8);
   Wire.onReceive(receiveEvent);
-
-  // Serial (debug) setup
-  Serial.begin(9600);
 
   // Servo setup
   servos[0].attach(3);
@@ -50,21 +44,13 @@ void loop() {
 // Protocol: first byte sent is which servo to set.
 // Second byte is the new angle value.
 void receiveEvent(int numBytes) {
-  while (Wire.available() >= 0) {
-	if (selectingServo) {
-		servoSel = Wire.read();
-		selectingServo = 0;
-	}
-	else {
-		newServoVal = Wire.read();
-		writeServo(servoSel, newServoVal);
-		selectingServo = 1;
-	}
+  while (Wire.available() > 0){
+    servo = Wire.read();
+    angle = Wire.read();
+    writeServo(servo, angle);
   }
 }
 
 void writeServo(int servo, int newAngle) {
   servos[servo].write(newAngle);
-  String debugString = "New Angle for J" + String(servo) + ": " + String(newAngle) + "\n";
-  Serial.print(debugString);
 }
